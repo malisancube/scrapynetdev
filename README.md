@@ -1,6 +1,6 @@
 # Scrapy.NET #
 
-Scrapy.NET is the framework that gives you a similar API as Scrapy and gives you a  powerful ability to crawl websites and extract structured data from their pages. It can be used for a wide range of purposes ranging from data mining, monitoring and automated testing.
+Scrapy.NET is a framework that gives you a similar API as Scrapy and gives you a  powerful ability to crawl websites and extract structured data from their pages. It can be used for a wide range of purposes ranging from data mining, monitoring and automated testing.
 
 ### Requirements
 

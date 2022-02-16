@@ -1,0 +1,36 @@
+name: QuotesSample
+services:
+# producer
+- name: producer
+  project: quotes.producer/quotes.producer.csproj
+- name: redis
+  image: redis
+  bindings:
+    - port: 6379
+      connectionString: ${host}:${port}
+
+# scraper
+- name: scraper
+  project: quotes.scraper/quotes.scraper.csproj
+
+# database
+- name: postgres
+  image:  postgres
+  env:
+  - name: POSTGRES_PASSWORD
+    value: "pass@word1"
+  bindings:
+  - port: 5432
+    connectionString: Server=${host};Port=${port};User Id=postgres;Password=${env:POSTGRES_PASSWORD};
+
+# queue
+- name: rabbit
+  image: rabbitmq:3-management
+  bindings:
+    - name: ui
+      protocol: http
+      port: 15672
+      containerPort: 15672
+    - name: amqp
+      protocol: amqp
+      port: 5672

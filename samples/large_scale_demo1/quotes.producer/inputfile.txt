@@ -1,0 +1,2 @@
+﻿http://quotes.toscrape.com/tag/humor/page/1/
+http://quotes.toscrape.com/tag/humor/page/2/

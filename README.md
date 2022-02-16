@@ -1,6 +1,6 @@
 # Scrapy.NET #
 
-Scrapy.NET is the .NET library that gives you a similar API as Scrapy and gives you a  powerful ability to crawl websites and extract structured data from their pages. It can be used for a wide range of purposes ranging from data mining, monitoring and automated testing.
+Scrapy.NET is the framework that gives you a similar API as Scrapy and gives you a  powerful ability to crawl websites and extract structured data from their pages. It can be used for a wide range of purposes ranging from data mining, monitoring and automated testing.
 
 ### Requirements
 
@@ -46,7 +46,7 @@ public class QuoteSpider : Spider<IResponse>
 
     public override async Task<object?> StartRequestsAsync(CancellationToken cancellationToken = default)
     {
-        // Create reguest
+        // Create request
         var httpRequest = GetRequest<HtmlRequest>(request =>
         {
             request.Url = StartUrl;

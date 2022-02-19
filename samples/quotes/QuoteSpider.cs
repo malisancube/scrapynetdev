@@ -17,7 +17,8 @@ public class QuoteSpider : Spider<IResponse>
         return await httpRequest.ExecuteAsync();
     }
 
-    public override async Task<object?> ParseAsync(BaseRequest response)
+    public override async Task<object?> ParseAsync(BaseRequest response,
+        CancellationToken cancellationToken = default)
     {
         var htmlResponse = (HtmlRequest)response;
         foreach (var quote in htmlResponse.Html.QuerySelectorAll("div.quote"))

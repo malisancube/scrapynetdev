@@ -22,6 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="google_cookies.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="proxy_list.txt">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

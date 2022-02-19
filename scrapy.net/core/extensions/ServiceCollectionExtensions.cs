@@ -36,18 +36,38 @@ public static class ServiceCollectionExtensions
 
         var httpClientBuilder = services.AddHttpClient("YYYY");
 
-        httpClientBuilder.AddHttpMessageHandler(t =>
-            {
-                var proxyService = t.GetRequiredService<IProxyService>();
-                return proxyService.GetHandler();
-            });
-
-        services.AddScoped<ICookieService, CookieService>();
-        httpClientBuilder.AddHttpMessageHandler(t =>
+        services.AddScoped(settings =>
         {
-            var cookieService = t.GetRequiredService<ICookieService>();
-            return cookieService.GetHandler();
+            var defaultSettings = settings.GetRequiredService<IOptions<DefaultSettings>>();
+            if (string.IsNullOrEmpty(defaultSettings.Value.ProxiesFile))
+            {
+                httpClientBuilder.ConfigureHttpMessageHandlerBuilder(x =>
+                {
+                    var proxy = new ProxySettings(defaultSettings.Value.ProxiesFile);
+                    var proxyService = settings.GetRequiredService<IProxyService>();
+
+                    x.PrimaryHandler = proxyService.GetHandler();
+                });
+            }
+
+
+
+            return new ProxySettings(defaultSettings.Value.ProxiesFile);
         });
+
+
+        //httpClientBuilder.AddHttpMessageHandler(t =>
+        //    {
+        //        var proxyService = t.GetRequiredService<IProxyService>();
+        //        return proxyService.GetHandler();
+        //    });
+
+        //services.AddScoped<ICookieService, CookieService>();
+        //httpClientBuilder.AddHttpMessageHandler(t =>
+        //{
+        //    var cookieService = t.GetRequiredService<ICookieService>();
+        //    return cookieService.GetHandler();
+        //});
     }
 }
 

@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "scrapy.net", "scrapy.net\scrapy.net.csproj", "{E00F5281-7A76-41D3-AFFA-0CEF78B9556E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "google", "samples\google1\google.csproj", "{8139990E-8E0E-433B-A54C-ED73F69DA7D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSample", "samples\google1\GoogleSample.csproj", "{8139990E-8E0E-433B-A54C-ED73F69DA7D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C69F2EB9-07B9-41FA-AEA7-4731BD84145B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "quotes", "samples\quotes\quotes.csproj", "{269B8DC4-148D-4C3D-BDDD-5DDC894963CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simple", "samples\quotes\Simple.csproj", "{269B8DC4-148D-4C3D-BDDD-5DDC894963CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BC30D1E5-CD87-45E5-ABA2-3E694A3E9F02}"
 EndProject
@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "scrapy.net.tests", "..\test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "quotes_pipeline", "samples\quotes-pipeline\quotes_pipeline.csproj", "{8C092695-E06C-4272-A3DC-12CA56F5F3BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "coin_market_cap", "samples\coinmarketcap\coin_market_cap.csproj", "{01081AA6-F02E-42DD-BAFD-179D5535432A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinMarketCap", "samples\coinmarketcap\CoinMarketCap.csproj", "{01081AA6-F02E-42DD-BAFD-179D5535432A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "large_scale_demo", "large_scale_demo", "{0078D020-AF23-4997-A3CE-8DB0772FCA82}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LargeScaleTye", "LargeScaleTye", "{0078D020-AF23-4997-A3CE-8DB0772FCA82}"
 	ProjectSection(SolutionItems) = preProject
 		tye.yaml = tye.yaml
 	EndProjectSection
@@ -28,19 +28,24 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "quotes.scraper", "samples\l
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "quotes.producer", "samples\large_scale_demo1\quotes.producer\quotes.producer.csproj", "{51432601-BC88-4E52-8C0E-E4A2891B1C9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "quotes_selenium", "samples\quotes_selenium\quotes_selenium.csproj", "{C7E47DE6-7BFF-4FC8-AEAC-4C8CDBC085BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeleniumSample", "samples\quotes_selenium\SeleniumSample.csproj", "{C7E47DE6-7BFF-4FC8-AEAC-4C8CDBC085BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "multi_spiders", "samples\multi_spiders\multi_spiders.csproj", "{8200DD29-48DE-46FD-81A7-64A0B765CCB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiSpider", "samples\multi_spiders\MultiSpider.csproj", "{8200DD29-48DE-46FD-81A7-64A0B765CCB7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "using_proxies", "samples\using_proxies\using_proxies.csproj", "{20E45839-984C-4632-82F3-B410C02A60BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsingProxies", "samples\using_proxies\UsingProxies.csproj", "{20E45839-984C-4632-82F3-B410C02A60BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "quotes_serilog", "samples\quotes_serilog\quotes_serilog.csproj", "{4B3AB391-3E09-43B3-BDBE-DD87DDEF8B13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuotesUsingSerilog", "samples\quotes_serilog\QuotesUsingSerilog.csproj", "{4B3AB391-3E09-43B3-BDBE-DD87DDEF8B13}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "quotes_retries", "samples\quotes_retries\quotes_retries.csproj", "{7B312340-1E09-4054-BE96-F54BC6B3E3B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttemptsAndRetries", "samples\quotes_retries\AttemptsAndRetries.csproj", "{7B312340-1E09-4054-BE96-F54BC6B3E3B4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "quotes_caching", "samples\quotes_caching\quotes_caching.csproj", "{CA128887-823F-4D6C-B3D3-819C31F4028A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CachingSample", "samples\quotes_caching\CachingSample.csproj", "{CA128887-823F-4D6C-B3D3-819C31F4028A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AA27E2AC-D5EC-4D87-BA01-55EE6DE56265}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookiesSample", "samples\using_cookies\CookiesSample.csproj", "{153A9340-4A00-4D28-8BCC-048733F38E88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +109,10 @@ Global
 		{CA128887-823F-4D6C-B3D3-819C31F4028A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA128887-823F-4D6C-B3D3-819C31F4028A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA128887-823F-4D6C-B3D3-819C31F4028A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{153A9340-4A00-4D28-8BCC-048733F38E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153A9340-4A00-4D28-8BCC-048733F38E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153A9340-4A00-4D28-8BCC-048733F38E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153A9340-4A00-4D28-8BCC-048733F38E88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +132,7 @@ Global
 		{4B3AB391-3E09-43B3-BDBE-DD87DDEF8B13} = {C69F2EB9-07B9-41FA-AEA7-4731BD84145B}
 		{7B312340-1E09-4054-BE96-F54BC6B3E3B4} = {C69F2EB9-07B9-41FA-AEA7-4731BD84145B}
 		{CA128887-823F-4D6C-B3D3-819C31F4028A} = {C69F2EB9-07B9-41FA-AEA7-4731BD84145B}
+		{153A9340-4A00-4D28-8BCC-048733F38E88} = {C69F2EB9-07B9-41FA-AEA7-4731BD84145B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC77BEF8-6CF2-4AE6-ADA8-B39F24FF3C3E}

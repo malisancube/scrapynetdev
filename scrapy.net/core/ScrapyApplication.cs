@@ -79,17 +79,11 @@ public class ScrapyApplication
             return Task.CompletedTask;
         }
 
-        var spiders = ServiceProvider.GetServices<Spider<IResponse>>();
-        foreach (var spider in spiders)
-        {
-            Spiders.Add(spider);
-        }
-
-        Logger.LogInformation($"Spiders count: {spiders.Count()}...");
+        Logger.LogInformation($"Spiders count: {Spiders.Count()}...");
 
         if (EngineStarted != null)
         {
-            EngineStarted.Invoke(this, new EngineStartedEventArgs(this, spiders));
+            EngineStarted.Invoke(this, new EngineStartedEventArgs(this, Spiders));
         }
 
         var results = new List<object?>();
@@ -118,7 +112,7 @@ public class ScrapyApplication
         // TODO: What if there was an error
         if (EngineStopped != null)
         {
-            EngineStopped.Invoke(this, new EngineStoppedEventArgs(this, spiders));
+            EngineStopped.Invoke(this, new EngineStoppedEventArgs(this, Spiders));
         }
     }
 
@@ -146,15 +140,29 @@ public class ScrapyApplication
         spider.Application = this;
         Spiders.Add(spider);
 
+
         Settings = ServiceProvider.GetRequiredService<IOptions<DefaultSettings>>();
         HostingEnvironment.ApplicationName = Settings.Value.BotName;
         HostingEnvironment.EnvironmentName = Settings.Value.EnvironmentName;
+        CheckSpiderDuplicates();
 
         // TODO: apply spider specific settings
         options.Invoke(ScrapyApplicationOptions);
         Settings.Value.ProxiesFile = ScrapyApplicationOptions.ProxiesFile;
 
         return UseMiddleWare();
+    }
+
+    private void CheckSpiderDuplicates()
+    {
+        var duplicates = Spiders
+            .GroupBy(s => s.Name)
+            .Select(s => new { Name = s.Key, Count = s.Count() });
+
+        if (duplicates.Any(s => s.Count > 1))
+        {
+            throw new Exception($"The Spider '{duplicates.First().Name}' has been registered more than once. Check 'app.MapSpider()'.");
+        }
     }
 
     public IServiceProvider MapSpiders()
@@ -177,6 +185,7 @@ public class ScrapyApplication
             spider.Application = this;
             Spiders.Add(spider);
         }
+        CheckSpiderDuplicates();
 
         Settings = ServiceProvider.GetRequiredService<IOptions<DefaultSettings>>();
         HostingEnvironment.ApplicationName = Settings.Value.BotName;

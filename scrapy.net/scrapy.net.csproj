@@ -4,22 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
-	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-	<Version>preview-0.0.1</Version>
-	<Description>Scrapy.NET is the .NET library that gives you a similar API as Scrapy and gives you a  powerful ability to crawl websites and extract structured data from their pages. It can be used for a wide range of purposes ranging from data mining, monitoring and automated testing.</Description>
-	<Copyright>scrapy.net</Copyright>
-	<PackageProjectUrl>scrapy.net</PackageProjectUrl>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<RepositoryType>git</RepositoryType>
-	<PackageTags>scraping,data-mining,testing</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.16.1" />

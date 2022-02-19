@@ -27,7 +27,7 @@ public class CookieService : ICookieService
             cookieContainer.Add(cookie);
         }
 
-        var handler = new HttpClientHandler() { CookieContainer = cookieContainer });
+        var handler = new HttpClientHandler() { CookieContainer = cookieContainer };
         return handler;
     }
 

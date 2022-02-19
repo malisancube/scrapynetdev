@@ -3,11 +3,23 @@ using Microsoft.Extensions.Logging;
 
 public class QuoteSpider : Spider<IResponse>
 {
-    private readonly ILogger<QuoteSpider> logger;
-
     public override string Name => "quotes";
 
     public override string StartUrl => "http://quotes.toscrape.com/tag/humor/";
+
+    private readonly Dictionary<string, string> Headers = new() {
+        ["accept"] = "*/*",
+        ["user-agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+        ["x-restli-protocol-version"] = "2.0.0",
+        ["x-li-page-instance"] = "urn:li:page:d_sales2_search_people;C3OyJqbYTo6bNVqVr3rccA==",
+        ["accept-language"] = "en-US,en;q=0.9,la;q=0.8",
+        ["accept-encoding"] = "gzip, deflate, br",
+        ["upgrade-insecure-requests"] = "1"
+    };
+
+    private readonly ILogger<QuoteSpider> logger;
+
+    private const string CookiesFile = "./google_cookies.json";
 
     public QuoteSpider(ILogger<QuoteSpider> logger) : base()
     {
@@ -16,10 +28,14 @@ public class QuoteSpider : Spider<IResponse>
 
     public override async Task<object?> StartRequestsAsync(CancellationToken cancellationToken = default)
     {
-        var request = GetRequest<HtmlRequest>();
-        request.Url = StartUrl;
-        request.CallBack = () => ParseAsync(request, cancellationToken: cancellationToken);
-        return await request.ExecuteAsync();
+        var htmlRequest = GetRequest<HtmlRequest>(request =>
+        {
+            request.Url = StartUrl;
+            request.Headers = Headers;
+            request.Cookies = CookieManager.LoadFromFile(CookiesFile);
+            request.CallBack = () => ParseAsync(request, cancellationToken: cancellationToken);
+        });
+        return await htmlRequest.ExecuteAsync();
     }
 
     public override async Task<object?> ParseAsync(BaseRequest response, CancellationToken cancellationToken = default)

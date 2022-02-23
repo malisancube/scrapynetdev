@@ -1,6 +1,5 @@
-﻿using scrapy.net;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using scrapy.net;
 
 var builder = ScrapyApplication.CreateBuilder(args);
 
@@ -17,18 +16,6 @@ builder.ConfigureAppConfiguration((context, config) =>
 });
 
 var app = builder.Build();
-app.MapSpider("google", options =>
-{
-    options.Headers = new Dictionary<string, string>() 
-    { 
-        { "Agent", "FireFox" } 
-    };
-});
+app.MapSpider("google");
 
-var cancellationToken = new CancellationToken();
-await app.RunAsync(cancellationToken);
-
-Console.WriteLine("End");
-
-
-
+await app.RunAsync();

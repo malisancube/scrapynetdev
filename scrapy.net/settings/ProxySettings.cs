@@ -19,4 +19,3 @@ public class ProxySettings
 		UseProxy = !string.IsNullOrEmpty(ProxiesFile);
 	}
 }
-

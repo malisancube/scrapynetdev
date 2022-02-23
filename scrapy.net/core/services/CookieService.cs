@@ -31,10 +31,8 @@ public class CookieService : ICookieService
         return handler;
     }
 
-
     public HttpClientHandler GetHandler()
     {
         return GetCookiesHandler(Settings.CookiesFile);
     }
-
 }

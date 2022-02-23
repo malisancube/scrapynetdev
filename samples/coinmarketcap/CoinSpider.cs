@@ -30,8 +30,4 @@ public class CoinSpider : Spider<IResponse>
 
         return await response.EndAsync();
     }
-
 }
-
-
-

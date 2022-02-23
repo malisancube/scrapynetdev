@@ -20,6 +20,4 @@ public class ReflectionUtils
 
         return IsAssignableToGenericType(baseType, genericType);
     }
-
 }
-

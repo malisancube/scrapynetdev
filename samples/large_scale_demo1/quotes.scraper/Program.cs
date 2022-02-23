@@ -15,15 +15,6 @@ builder.ConfigureAppConfiguration((context, config) =>
 });
 
 var app = builder.Build();
-app.MapSpider("quotes", options =>
-{
-    options.Headers = new Dictionary<string, string>()
-    {
-        { "Agent", "FireFox" }
-    };
-});
+app.MapSpider("quotes");
 
-var cancellationToken = new CancellationToken();
-await app.RunAsync(cancellationToken);
-
-Console.WriteLine("End");
+await app.RunAsync();

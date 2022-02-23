@@ -1,9 +1,6 @@
-﻿using System.Collections;
-
-namespace scrapy.net;
+﻿namespace scrapy.net;
 
 public interface IResponse
 {
 
 }
-

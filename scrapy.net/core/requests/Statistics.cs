@@ -24,4 +24,3 @@ public class Statistics
     public int Pages { get; set; }
     public int Items { get; internal set; }
 }
-

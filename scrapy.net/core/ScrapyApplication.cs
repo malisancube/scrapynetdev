@@ -1,8 +1,8 @@
-﻿using System.Collections.Concurrent;
-using System.Reflection;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Options;
+using System.Collections.Concurrent;
+using System.Reflection;
 
 namespace scrapy.net;
 
@@ -42,12 +42,6 @@ public class ScrapyApplication
             ContentRootPath = Directory.GetCurrentDirectory()
         };
 
-        //app.Services.AddLogging(logging =>
-        //   {
-        //       logging.AddConsole();
-        //       logging.AddDebug();
-        //       logging.SetMinimumLevel(LogLevel.Debug);
-        //   });
         app.Services.AddSingleton<ScrapyApplication>();
         app.Services.AddSingleton(typeof(IServiceCollection), _ => app.Services);
         app.Services.RegisterDefaultServices();
@@ -140,7 +134,7 @@ public class ScrapyApplication
             throw new Exception($"Spider with name '{nameof(name)}' was not found. Ensure the Name property has been set.");
         }
 
-        return MapSpidersInternal(new[] { spider }, options);
+        return MapSpidersCore(new[] { spider }, options);
     }
 
     public IServiceProvider MapSpiders()
@@ -153,10 +147,10 @@ public class ScrapyApplication
         var spiders = ServiceProvider
             .GetServices<Spider<IResponse>>();
 
-        return MapSpidersInternal(spiders, options);
+        return MapSpidersCore(spiders, options);
     }
 
-    private IServiceProvider MapSpidersInternal(IEnumerable<Spider<IResponse>> spiders, Action<SpiderSettings> options)
+    private IServiceProvider MapSpidersCore(IEnumerable<Spider<IResponse>> spiders, Action<SpiderSettings> options)
     {
         if (!spiders.Any())
         {
@@ -227,6 +221,3 @@ public class ScrapyApplication
         Logger.LogInformation($"Page (s): {statistics.Pages}");
     }
 }
-
-
-

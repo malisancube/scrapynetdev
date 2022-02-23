@@ -49,9 +49,6 @@ public static class ServiceCollectionExtensions
                     x.PrimaryHandler = proxyService.GetHandler();
                 });
             }
-
-
-
             return new ProxySettings(defaultSettings.Value.ProxiesFile);
         });
 
@@ -70,4 +67,3 @@ public static class ServiceCollectionExtensions
         //});
     }
 }
-

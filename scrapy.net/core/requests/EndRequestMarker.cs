@@ -9,4 +9,3 @@ public class EndRequestMarker
 
     public Statistics Statistics { get; }
 }
-

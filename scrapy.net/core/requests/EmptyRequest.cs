@@ -34,6 +34,6 @@ public class EmptyRequest : BaseRequest
 
     public override void Yield(object item)
     {
-        
+        // No Op
     }
 }

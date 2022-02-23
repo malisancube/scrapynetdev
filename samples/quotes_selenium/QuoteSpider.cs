@@ -85,8 +85,4 @@ public class QuoteSpider : Spider<IResponse>
         response.CallBack = () => ParseAsync(response, cancellationToken: cancellationToken);
         return await response.ExecuteAsync();
     }
-
 }
-
-
-

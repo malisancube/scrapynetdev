@@ -10,5 +10,4 @@ public class PriorityAttribute : Attribute
     public int Priority { get; private set; }
 }
 
-
 public record SpiderPipelineDescriptior(Type ItemType, int? Priority);

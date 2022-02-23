@@ -4,7 +4,6 @@ namespace scrapy.net;
 
 public static class FileServicesExtensions
 {
-
     public static void RegisterStorageServices(this IServiceCollection services, Func<IServiceProvider, IOptions<ApplicationSettings>> implementationFactory)
     {
         services.AddSingleton(settings =>
@@ -13,6 +12,4 @@ public static class FileServicesExtensions
             return new MultiThreadFileWriter(defaultSettings.Value.ProxiesFile);
         });
     }
-
 }
-

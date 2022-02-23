@@ -27,6 +27,4 @@ public static class CookieManager
         var cookies = JsonSerializer.Deserialize<IList<Cookie>>(json, options);
         return cookies;
     }
-
-
 }

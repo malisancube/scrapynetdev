@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace scrapy.net;
 
 public class DefaultEngine : IScrapyEngine
@@ -11,7 +9,6 @@ public class DefaultEngine : IScrapyEngine
         services.AddSingleton<IScrapyDownloader, DefaultDownloader>();
         Services = services;
     }
-
 }
 
 public interface IScrapyEngine

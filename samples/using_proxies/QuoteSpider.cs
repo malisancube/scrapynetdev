@@ -45,8 +45,4 @@ public class QuoteSpider : Spider<IResponse>
         }
         return await response.EndAsync();
     }
-
 }
-
-
-

@@ -1,8 +1,7 @@
-﻿using scrapy.net;
-using Microsoft.Extensions.Logging;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
+﻿using Microsoft.Extensions.Logging;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using scrapy.net;
 
 public class QuoteSpider : Spider<IResponse>
 {
@@ -87,8 +86,4 @@ public class QuoteSpider : Spider<IResponse>
         response.CallBack = () => ParseAsync(response, cancellationToken: cancellationToken);
         return await response.ExecuteAsync();
     }
-
 }
-
-
-

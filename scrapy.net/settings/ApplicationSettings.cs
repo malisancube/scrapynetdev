@@ -29,6 +29,4 @@ public class ApplicationSettings
 	public string DefaultOutputFileExtention { get; set; } = ".jl";
 
 	public ProxySettings ProxySettings { get; set; } = new ProxySettings();
-
-	public string Spider { get; set; }
 }

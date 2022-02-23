@@ -13,4 +13,3 @@ public abstract class SpiderPipelineItemBase
         return Task.FromResult(Response);
     }
 }
-

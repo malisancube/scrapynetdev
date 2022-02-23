@@ -4,7 +4,6 @@ namespace scrapy.net;
 
 public class ProxyService : IProxyService
 {
-
     public string[] Proxies { get; set; }
     public ProxySettings Settings { get; }
 

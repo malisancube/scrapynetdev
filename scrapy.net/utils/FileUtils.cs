@@ -1,6 +1,6 @@
 ﻿namespace scrapy.net;
 
-public static class FileEx
+public static class FileUtils
 {
     /// <summary>
     /// This is the same default buffer size as
@@ -35,7 +35,6 @@ public static class FileEx
                 lines.Add(line);
             }
         }
-
         return lines.ToArray();
     }
 }

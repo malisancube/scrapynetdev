@@ -33,6 +33,3 @@ public class GoogleSpider : Spider<IResponse>
         return await response.EndAsync();
     }
 }
-
-
-

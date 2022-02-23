@@ -1,8 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 
 namespace scrapy.net;
 
@@ -53,7 +50,6 @@ public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable
 
         // Overwrite the some of the defaults by assigning newer settings 
         action.Invoke(request);
-
         return request;
     }
 
@@ -64,7 +60,7 @@ public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable
         {
             request.Headers = SpiderSettings.Headers;
         }
-        request.Method = "GET";
+        request.Method = HttpConstants.HttpGet;
     }
 
     private void InitializeSpider()
@@ -80,6 +76,5 @@ public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable
     {
         OutputFile.Dispose();
     }
-
 }
 

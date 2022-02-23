@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace scrapy.net;
+﻿namespace scrapy.net;
 
 //public class BinaryRequest : BaseRequest
 //{

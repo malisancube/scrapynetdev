@@ -72,9 +72,14 @@ public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable
         }
     }
 
+    public void Close()
+    {
+        OutputFile?.Dispose();
+    }
+
     public void Dispose()
     {
-        OutputFile.Dispose();
+        // TODO: // Cleanup
     }
 }
 

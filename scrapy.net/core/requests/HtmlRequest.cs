@@ -86,6 +86,9 @@ public class HtmlRequest : BaseRequest
 
     public override void Yield(object item)
     {
+        // Required to execute pipeline tasks
+        base.Yield(item);
+
         // TODO: Use indexer to write to stats
         Statistics.Instance.Items++;
         //Settings.

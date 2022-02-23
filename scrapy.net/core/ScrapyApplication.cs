@@ -92,7 +92,7 @@ public class ScrapyApplication
         {
             var items = await spider.StartRequestsAsync(token);
             results.Add(items);
-            spider.Dispose();
+            spider.Close();
         });
 
         foreach (var result in results)

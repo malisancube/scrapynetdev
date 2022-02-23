@@ -5,12 +5,12 @@ namespace scrapy.net;
 
 public class CookieService : ICookieService
 {
-    public CookieService(DefaultSettings settings)
+    public CookieService(ApplicationSettings settings)
     {
         Settings = settings;
     }
 
-    public DefaultSettings Settings { get; }
+    public ApplicationSettings Settings { get; }
 
     private HttpClientHandler GetCookiesHandler(string cookiesFile)
     {

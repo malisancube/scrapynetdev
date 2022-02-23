@@ -25,11 +25,11 @@ public abstract class BaseRequest : IRequest, IResponse
 
     private readonly IHttpClientFactory _httpClientFactory;
 
-    private DefaultSettings Settings { get; }
+    private ApplicationSettings Settings { get; }
 
     public BaseRequest(IServiceProvider serviceProvider,
         IHttpClientFactory httpClientFactory, 
-        IOptions<DefaultSettings> settings)
+        IOptions<ApplicationSettings> settings)
     {
         ServiceProvider = serviceProvider;
         Settings = settings.Value;
@@ -43,8 +43,7 @@ public abstract class BaseRequest : IRequest, IResponse
     public virtual void Yield(object item)
     {
         // TODO : Cache this
-        var spider = (Spider<IResponse>)Spider;
-        var pipeline = spider
+        var pipeline = ((Spider<IResponse>)Spider)
             .Pipelines
             .Select(itemType => new SpiderPipelineDescriptior(itemType, itemType.GetCustomAttribute<PriorityAttribute>()?.Priority))
             .OrderBy(itemType => itemType.Priority);
@@ -53,12 +52,10 @@ public abstract class BaseRequest : IRequest, IResponse
         {
             if (ServiceProvider.GetService(type.ItemType) is SpiderPipelineItemBase pipelineItem)
             {
-                pipelineItem.ProcessItemAsync(spider, item, default);
+                pipelineItem.ProcessItemAsync(((Spider<IResponse>)Spider), item, default);
             }
         }
     }
-
-
 }
 
 ///// <summary>
@@ -124,7 +121,7 @@ public abstract class BaseResponse : BaseRequest
     protected BaseResponse(
         IServiceProvider serviceProvider,
         IHttpClientFactory httpClientFactory, 
-        IOptions<DefaultSettings> settings) : base(serviceProvider, httpClientFactory, settings)
+        IOptions<ApplicationSettings> settings) : base(serviceProvider, httpClientFactory, settings)
     {
     }
 }

@@ -9,27 +9,27 @@ public static class ServiceCollectionExtensions
         return serviceProvider;
     }
 
-    public static IServiceProvider MapSpider(this IServiceProvider serviceProvider, string name, Action<ScrapyApplicationOptions> options)
+    public static IServiceProvider MapSpider(this IServiceProvider serviceProvider, string name, Action<ApplicationSettings> options)
     {
         var app = serviceProvider.GetRequiredService<ScrapyApplication>();
-        options.Invoke(app.ScrapyApplicationOptions);
+        options.Invoke(app.Settings);
         return serviceProvider;
     }
 
     public static void RegisterDefaultServices(this IServiceCollection services)
     {
-        services.AddOptions<DefaultSettings>();
+        services.AddOptions<ApplicationSettings>();
         services.AddSingleton<IScrapyEngine, DefaultEngine>();
         services.AddScoped<EmptyRequest>();
         services.AddScoped<HtmlRequest>();
         services.AddScoped<JsonRequest>();
     }
 
-    public static void RegisterHttpServices(this IServiceCollection services, Func<IServiceProvider, IOptions<DefaultSettings>> implementationFactory)
+    public static void RegisterHttpServices(this IServiceCollection services, Func<IServiceProvider, IOptions<ApplicationSettings>> implementationFactory)
     {
         services.AddSingleton(settings =>
         {
-            var defaultSettings = settings.GetRequiredService<IOptions<DefaultSettings>>();
+            var defaultSettings = settings.GetRequiredService<IOptions<ApplicationSettings>>();
             return new ProxySettings(defaultSettings.Value.ProxiesFile);
         });
         services.AddScoped<IProxyService, ProxyService>();
@@ -38,7 +38,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped(settings =>
         {
-            var defaultSettings = settings.GetRequiredService<IOptions<DefaultSettings>>();
+            var defaultSettings = settings.GetRequiredService<IOptions<ApplicationSettings>>();
             if (string.IsNullOrEmpty(defaultSettings.Value.ProxiesFile))
             {
                 httpClientBuilder.ConfigureHttpMessageHandlerBuilder(x =>

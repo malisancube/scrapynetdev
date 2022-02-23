@@ -6,11 +6,11 @@ namespace scrapy.net;
 public class EmptyRequest : BaseRequest
 {
     public ILogger<EmptyRequest> Logger { get; }
-    public DefaultSettings Settings { get; }
+    public ApplicationSettings Settings { get; }
 
     public EmptyRequest(IServiceProvider serviceProvider,
         IHttpClientFactory httpClientFactory, 
-        IOptions<DefaultSettings> settings, 
+        IOptions<ApplicationSettings> settings, 
         ILogger<EmptyRequest> logger) : base(serviceProvider, httpClientFactory, settings)
     {
         Settings = settings.Value;

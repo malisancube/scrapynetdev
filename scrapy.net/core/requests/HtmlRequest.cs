@@ -14,7 +14,7 @@ public class HtmlRequest : BaseRequest
 
     private IHtmlDocument _html;
     public ILogger<HtmlRequest> Logger { get; }
-    public DefaultSettings Settings { get; }
+    public ApplicationSettings Settings { get; }
     public Statistics Statistics { get; }
 
     public IHtmlDocument Html 
@@ -27,7 +27,7 @@ public class HtmlRequest : BaseRequest
 
     public HtmlRequest(IServiceProvider serviceProvider,
         IHttpClientFactory httpClientFactory, 
-        IOptions<DefaultSettings> settings, 
+        IOptions<ApplicationSettings> settings, 
         ILogger<HtmlRequest> logger) : base(serviceProvider, httpClientFactory, settings)
     {
         Settings = settings.Value;
@@ -43,7 +43,7 @@ public class HtmlRequest : BaseRequest
         // https://stackoverflow.com/questions/63203660/httpclient-with-multiple-proxies-while-handling-socket-exhaustion-and-dns-recycl
         try
         {
-            AddHeaders(_httpClient, Settings);
+            //AddHeaders(_httpClient, Settings);
 
             var caller = callerName;
             
@@ -70,13 +70,13 @@ public class HtmlRequest : BaseRequest
 
     public override async Task<object?> EndAsync([CallerMemberName] string callerName = "")
     {
-        return await Task.FromResult(new EndToken(Statistics.Instance));
+        return await Task.FromResult(new EndRequestMarker(Statistics.Instance));
     }
 
-    private void AddHeaders(HttpClient httpClient, DefaultSettings settings)
+    private void AddHeaders(HttpClient httpClient, ApplicationSettings settings)
     {
         _httpClient.DefaultRequestHeaders.Clear();
-        var allTables = DictionaryExtensions.Merge(new[] { settings.DefaultRequestHeaders, Headers });
+        var allTables = DictionaryExtensions.Merge(new[] { settings.Headers, Headers });
         foreach (var header in allTables)
         {
             _httpClient.DefaultRequestHeaders.Add(header.Key, header.Value);
@@ -87,10 +87,15 @@ public class HtmlRequest : BaseRequest
 
     public override void Yield(object item)
     {
-
-
+        // TODO: Use indexer to write to stats
         Statistics.Instance.Items++;
         //Settings.
+
+        var spider = ((Spider<IResponse>)this.Spider);
+        if (spider.OutputFile != null)
+        {
+            spider.OutputFile.Write(item);
+        }
     }
 
 

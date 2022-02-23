@@ -21,7 +21,7 @@ public class JsonRequest : BaseRequest
 
     public JsonRequest(IServiceProvider serviceProvider,
         IHttpClientFactory httpClientFactory,
-        IOptions<DefaultSettings> settings,
+        IOptions<ApplicationSettings> settings,
         ILogger<JsonRequest> logger) : base(serviceProvider, httpClientFactory, settings)
     {
         _httpClient = httpClientFactory.CreateClient();
@@ -58,12 +58,12 @@ public class JsonRequest : BaseRequest
 
     public override async Task<object?> EndAsync([CallerMemberName] string callerName = "")
     {
-        return await Task.FromResult(new EndToken(Statistics.Instance));
+        return await Task.FromResult(new EndRequestMarker(Statistics.Instance));
     }
 
-    private void AddHeaders(HttpClient httpClient, IOptions<DefaultSettings> settings)
+    private void AddHeaders(HttpClient httpClient, IOptions<ApplicationSettings> settings)
     {
-        foreach (var header in settings.Value.DefaultRequestHeaders)
+        foreach (var header in settings.Value.Headers)
         {
             _httpClient.DefaultRequestHeaders.Add(header.Key, header.Value);
         }

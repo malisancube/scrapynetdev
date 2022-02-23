@@ -17,6 +17,9 @@ builder.ConfigureAppConfiguration((context, config) =>
 
 var app = builder.Build();
 
-app.MapSpider("quotes");
+app.MapSpider("quotes", spider =>
+{
+    spider.Spider = "RANDOMNAME";
+});
 
 await app.RunAsync();

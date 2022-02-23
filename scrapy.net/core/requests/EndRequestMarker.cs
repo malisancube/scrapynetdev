@@ -1,8 +1,8 @@
 ﻿namespace scrapy.net;
 
-public class EndToken
+public class EndRequestMarker
 {
-    public EndToken(Statistics statistics)
+    public EndRequestMarker(Statistics statistics)
     {
         Statistics = statistics;
     }

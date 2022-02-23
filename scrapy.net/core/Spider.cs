@@ -2,11 +2,14 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace scrapy.net;
 
-public abstract class Spider<TResponse> : ISpider<TResponse>  where TResponse : IResponse
+public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable 
 {
+    public SpiderSettings SpiderSettings { get; set; } = new();
+
     public abstract string Name { get; }
 
     public abstract string StartUrl { get; }
@@ -19,15 +22,20 @@ public abstract class Spider<TResponse> : ISpider<TResponse>  where TResponse : 
 
     public List<Type> Pipelines { get; set; } = new List<Type>();
 
-    public ILogger<Spider<TResponse>> Logger { get; }
+    public ILogger<Spider<IResponse>> Logger { get; }
+
+    public OutputFile OutputFile { get; set; }
 
     public abstract Task<object?> StartRequestsAsync(CancellationToken cancellationToken);
 
     public abstract Task<object?> ParseAsync(BaseRequest response, CancellationToken cancellationToken = default);
 
-    public Spider(ILogger<Spider<TResponse>>? logger = null, IConfiguration? configuration = null, IHostEnvironment environment = null)
+    public Spider(ILogger<Spider<IResponse>>? logger = null,  
+        IConfiguration? configuration = null, 
+        IHostEnvironment environment = null)
     {
         Logger = logger;
+        InitializeSpider();
     }
 
     public T GetRequest<T>() where T : BaseRequest
@@ -40,16 +48,38 @@ public abstract class Spider<TResponse> : ISpider<TResponse>  where TResponse : 
     public T GetRequest<T>(Action<T> action) where T : BaseRequest
     {
         var request = Application.ServiceProvider.GetRequiredService<T>();
+        request.Spider = this; 
+        InitializeRequest(ref request);
+
+        // Overwrite the some of the defaults by assigning newer settings 
         action.Invoke(request);
-        request.Spider = this;
+
         return request;
+    }
+
+    private void InitializeRequest<T>(ref T request) where T : BaseRequest
+    {
+        // Setup initial request defaults
+        if (SpiderSettings.Headers.Any())
+        {
+            request.Headers = SpiderSettings.Headers;
+        }
+        request.Method = "GET";
+    }
+
+    private void InitializeSpider()
+    {
+        if (SpiderSettings.OutputSettings.OutputType == OutputType.File)
+        {
+            SpiderSettings.OutputSettings.OutputFileName = Name + SpiderSettings.DefaultOutputFileExtention;
+            OutputFile = new OutputFile(SpiderSettings.OutputSettings.OutputFileName);
+        }
+    }
+
+    public void Dispose()
+    {
+        OutputFile.Dispose();
     }
 
 }
 
-public interface ISpider<IResponse>
-{
-    //public Task<IResponse> StartRequestsAsync(CancellationToken cancellationToken);
-    public Task<object?> ParseAsync(BaseRequest response, CancellationToken cancellationToken = default);
-
-}

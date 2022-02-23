@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BC30D1E5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "scrapy.net.tests", "..\test\scrapy.net.tests\scrapy.net.tests.csproj", "{96AC6945-1E74-4E40-8849-BBD1041DB878}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "quotes_pipeline", "samples\quotes-pipeline\quotes_pipeline.csproj", "{8C092695-E06C-4272-A3DC-12CA56F5F3BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuotesPipeline", "samples\quotes-pipeline\QuotesPipeline.csproj", "{8C092695-E06C-4272-A3DC-12CA56F5F3BF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinMarketCap", "samples\coinmarketcap\CoinMarketCap.csproj", "{01081AA6-F02E-42DD-BAFD-179D5535432A}"
 EndProject

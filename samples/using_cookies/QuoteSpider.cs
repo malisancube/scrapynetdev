@@ -10,11 +10,8 @@ public class QuoteSpider : Spider<IResponse>
     private readonly Dictionary<string, string> Headers = new() {
         ["accept"] = "*/*",
         ["user-agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
-        ["x-restli-protocol-version"] = "2.0.0",
-        ["x-li-page-instance"] = "urn:li:page:d_sales2_search_people;C3OyJqbYTo6bNVqVr3rccA==",
         ["accept-language"] = "en-US,en;q=0.9,la;q=0.8",
-        ["accept-encoding"] = "gzip, deflate, br",
-        ["upgrade-insecure-requests"] = "1"
+        ["accept-encoding"] = "gzip, deflate, br"
     };
 
     private readonly ILogger<QuoteSpider> logger;

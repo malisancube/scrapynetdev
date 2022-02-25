@@ -5,7 +5,7 @@ namespace scrapy.net;
 
 public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable 
 {
-    public SpiderSettings SpiderSettings { get; set; } = new();
+    public SpiderSettings SpiderSettings { get; set; }
 
     public abstract string Name { get; }
 
@@ -29,10 +29,13 @@ public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable
 
     public Spider(ILogger<Spider<IResponse>>? logger = null,  
         IConfiguration? configuration = null, 
-        IHostEnvironment environment = null)
+        IHostEnvironment environment = null,
+        IServiceProvider serviceProvider = null)
     {
         Logger = logger;
-        InitializeSpider();
+        
+        var sep = serviceProvider;
+        //InitializeSpider();
     }
 
     public T GetRequest<T>() where T : BaseRequest
@@ -45,7 +48,6 @@ public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable
     public T GetRequest<T>(Action<T> action) where T : BaseRequest
     {
         var request = Application.ServiceProvider.GetRequiredService<T>();
-        request.Spider = this; 
         InitializeRequest(ref request);
 
         // Overwrite the some of the defaults by assigning newer settings 
@@ -55,6 +57,8 @@ public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable
 
     private void InitializeRequest<T>(ref T request) where T : BaseRequest
     {
+        request.Spider = this;
+
         // Setup initial request defaults
         if (SpiderSettings.Headers.Any())
         {
@@ -63,7 +67,7 @@ public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable
         request.Method = HttpConstants.HttpGet;
     }
 
-    private void InitializeSpider()
+    internal void Initialize()
     {
         if (SpiderSettings.OutputSettings.OutputType == OutputType.File)
         {
@@ -82,4 +86,3 @@ public abstract class Spider<IResponse> : ISpider<IResponse>, IDisposable
         // TODO: // Cleanup
     }
 }
-

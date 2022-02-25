@@ -22,14 +22,10 @@ public abstract class BaseRequest : IRequest, IResponse
 
     private readonly IHttpClientFactory _httpClientFactory;
 
-    private ApplicationSettings Settings { get; }
-
     public BaseRequest(IServiceProvider serviceProvider,
-        IHttpClientFactory httpClientFactory, 
-        IOptions<ApplicationSettings> settings)
+        IHttpClientFactory httpClientFactory)
     {
         ServiceProvider = serviceProvider;
-        Settings = settings.Value;
         _httpClientFactory = httpClientFactory;
     }
 
@@ -117,8 +113,7 @@ public abstract class BaseResponse : BaseRequest
 {
     protected BaseResponse(
         IServiceProvider serviceProvider,
-        IHttpClientFactory httpClientFactory, 
-        IOptions<ApplicationSettings> settings) : base(serviceProvider, httpClientFactory, settings)
+        IHttpClientFactory httpClientFactory) : base(serviceProvider, httpClientFactory)
     {
     }
 }

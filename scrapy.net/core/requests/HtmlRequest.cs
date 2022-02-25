@@ -13,7 +13,6 @@ public class HtmlRequest : BaseRequest
 
     private IHtmlDocument _html;
     public ILogger<HtmlRequest> Logger { get; }
-    public ApplicationSettings Settings { get; }
     public Statistics Statistics { get; }
 
     public IHtmlDocument Html 
@@ -26,10 +25,8 @@ public class HtmlRequest : BaseRequest
 
     public HtmlRequest(IServiceProvider serviceProvider,
         IHttpClientFactory httpClientFactory, 
-        IOptions<ApplicationSettings> settings, 
-        ILogger<HtmlRequest> logger) : base(serviceProvider, httpClientFactory, settings)
+        ILogger<HtmlRequest> logger) : base(serviceProvider, httpClientFactory)
     {
-        Settings = settings.Value;
         Logger = logger;
 
         _httpClient = httpClientFactory.CreateClient();

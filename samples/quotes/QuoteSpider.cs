@@ -8,7 +8,7 @@ public class QuoteSpider : Spider<IResponse>
 
     public override async Task<object?> StartRequestsAsync(CancellationToken cancellationToken = default)
     {
-        // Create reguest
+        // Create request
         var httpRequest = GetRequest<HtmlRequest>(request =>
         {
             request.Url = StartUrl;
@@ -29,7 +29,6 @@ public class QuoteSpider : Spider<IResponse>
                 Author = quote.QuerySelector("small.author")?.TextContent
             };
             response.Yield(item);
-            // Persist item into your preferred store
         }
 
         // Navigate to next page

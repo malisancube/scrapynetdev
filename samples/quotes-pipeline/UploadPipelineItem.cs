@@ -13,7 +13,7 @@ internal class UploadPipelineItem : SpiderPipelineItemBase
 
     public override Task<IResponse> ProcessItemAsync(Spider<IResponse> spider, object? item, CancellationToken cancellationToken = default)
     {
-        Logger.LogInformation("Process Item");
+        Logger.LogInformation($"Process Item: {item}");
         return base.ProcessItemAsync(spider, item, cancellationToken);
     }
 }

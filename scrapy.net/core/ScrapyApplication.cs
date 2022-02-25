@@ -14,7 +14,7 @@ public class ScrapyApplication
 
     public Dictionary<string, Type> Scrapers { get; set; } = new Dictionary<string, Type>();
 
-    public IServiceProvider ServiceProvider { get; set; }
+    public IServiceProvider ServiceProvider { get; internal set; }
 
     public HostingEnvironment HostingEnvironment { get; set; }
 
@@ -168,6 +168,7 @@ public class ScrapyApplication
 
             // Overwrite them with specific spider settings if set
             options.Invoke(spider.SpiderSettings);
+            spider.Initialize();
             Spiders.Add(spider);
         }
         CheckSpiderDuplicates();

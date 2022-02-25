@@ -20,12 +20,10 @@ public class JsonRequest : BaseRequest
 
     public JsonRequest(IServiceProvider serviceProvider,
         IHttpClientFactory httpClientFactory,
-        IOptions<ApplicationSettings> settings,
-        ILogger<JsonRequest> logger) : base(serviceProvider, httpClientFactory, settings)
+        ILogger<JsonRequest> logger) : base(serviceProvider, httpClientFactory)
     {
         _httpClient = httpClientFactory.CreateClient();
         _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        AddHeaders(_httpClient, settings);
         Logger = logger;
     }
 

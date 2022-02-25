@@ -13,7 +13,7 @@ internal class CleanupPipelineItem : SpiderPipelineItemBase
 
     public override Task<IResponse> CloseSpiderAsync(Spider<IResponse> spider, CancellationToken cancellationToken = default)
     {
-        Logger.LogInformation("Close spider");
+        Logger.LogInformation($"Close spider: {spider.Name}");
         return base.CloseSpiderAsync(spider, cancellationToken);
     }
 }

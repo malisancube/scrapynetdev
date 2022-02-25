@@ -10,10 +10,8 @@ public class EmptyRequest : BaseRequest
 
     public EmptyRequest(IServiceProvider serviceProvider,
         IHttpClientFactory httpClientFactory, 
-        IOptions<ApplicationSettings> settings, 
-        ILogger<EmptyRequest> logger) : base(serviceProvider, httpClientFactory, settings)
+        ILogger<EmptyRequest> logger) : base(serviceProvider, httpClientFactory)
     {
-        Settings = settings.Value;
         Logger = logger;
     }
 

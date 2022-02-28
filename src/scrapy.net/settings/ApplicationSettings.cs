@@ -18,7 +18,7 @@ public class ApplicationSettings
 
 	public bool DownloaderStats { get; set; } = true;
 
-	public string EnvironmentName { get; set; } = "Development";
+	public string EnvironmentName { get; set; } = "development";
 
 	public bool UseProxies { get; set; } = false;
 

@@ -14,9 +14,9 @@ public class ScrapyApplication : IAsyncDisposable
     /// <summary>
     /// Services used by the application
     /// </summary>
-    public IServiceCollection Services { get; set; }
+    public IServiceCollection Services { get; internal set; }
 
-    public ScrapyApplication  Application { get; set; }
+    public ScrapyApplication  Application { get; internal set; }
 
     /// <summary>
     /// The ServiceProvider to enable dependeency resolution 
@@ -26,7 +26,7 @@ public class ScrapyApplication : IAsyncDisposable
     /// <summary>
     /// Get and sets hosting environment
     /// </summary>
-    public HostingEnvironment HostingEnvironment { get; set; }
+    public HostingEnvironment HostingEnvironment { get; internal set; }
 
     /// <summary>
     /// The set of <see cref="Spider<IResponse>"/> items that will be run during scraping
@@ -36,21 +36,17 @@ public class ScrapyApplication : IAsyncDisposable
     /// <summary>
     /// Application settings that form the default for all spiders
     /// </summary>
-    public ApplicationSettings Settings { get; set; }
+    public ApplicationSettings Settings { get; internal set; }
 
     /// <summary>
     /// Configuration information received from <see cref="IConfiguration"/>
     /// </summary>
-    public IConfigurationRoot Configuration { get; set; } 
+    public IConfigurationRoot Configuration { get; internal set; } 
 
     /// <summary>
     /// Sets and gets application logger
     /// </summary>
-    public ILogger<ScrapyApplication> Logger { get; set; }
-
-    public EventHandler<EngineStartedEventArgs> EngineStarted  { get; set; }
-
-    public EventHandler<EngineStoppedEventArgs> EngineStopped  { get; set; }
+    public ILogger<ScrapyApplication> Logger { get; internal set; }
 
     /// <summary>
     /// Configuration builder to enable application and spider setup
@@ -107,7 +103,7 @@ public class ScrapyApplication : IAsyncDisposable
     /// </summary>
     /// <param name="assembly"></param>
     /// <returns>ScrapyApplication instance</returns>
-    public ScrapyApplication Build(Assembly? assembly = null)
+    public ScrapyApplication Build()
     {
         RegisterSpiders();
         ServiceProvider = Services.BuildServiceProvider();
@@ -144,40 +140,37 @@ public class ScrapyApplication : IAsyncDisposable
     public async Task RunAsync(CancellationToken token = default)
     {
         Logger.LogInformation($"Spiders count: {Spiders.Count()}...");
-        if (EngineStarted != null)
+        try
         {
-            EngineStarted.Invoke(this, new EngineStartedEventArgs(this, Spiders));
-        }
-
-        var results = new List<object?>();
-        await Parallel.ForEachAsync(Spiders, async (spider, token) =>
-        {
-            var items = await spider.StartRequestsAsync(token);
-            results.Add(items);
-            spider.Close();
-        });
-
-        foreach (var result in results)
-        {
-            if (result is EndRequestMarker endRequestMarker)
+            var results = new List<object?>();
+            await Parallel.ForEachAsync(Spiders, async (spider, token) =>
             {
-                // Call pipeline stopped event
+                var items = await spider.StartRequestsAsync(token);
+                results.Add(items);
+                spider.Close();
+            });
 
-                // Add result items to staistics
+            foreach (var result in results)
+            {
+                if (result is EndRequestMarker endRequestMarker)
+                {
+                    // TODO: Call pipeline stopped event
+
+                    // TODO: Add result items to staistics
+                }
+            }
+
+            foreach (var result in results)
+            {
+                // Show statistics
+                //DisplayStatistics(task, endToken.Statistics);
             }
         }
-
-        // TODO: What if there was an error
-        if (EngineStopped != null)
+        catch (Exception exception)
         {
-            EngineStopped.Invoke(this, new EngineStoppedEventArgs(this, Spiders));
+            throw;
         }
 
-        foreach(var result in results)
-        {
-            // Show statistics
-            //DisplayStatistics(task, endToken.Statistics);
-        }
     }
 
     /// <summary>
@@ -270,6 +263,20 @@ public class ScrapyApplication : IAsyncDisposable
         }
     }
 
+    private IServiceProvider RegisterSpiders()
+    {
+        var spiders = Assembly
+            .GetEntryAssembly()
+            .GetTypes()
+            .Where(t => typeof(Spider<IResponse>).IsAssignableFrom(t) && !t.IsAbstract);
+
+        foreach (var spider in spiders)
+        {
+            Services.AddSingleton(typeof(Spider<IResponse>), spider);
+        }
+        return ServiceProvider;
+    }
+
     private IServiceProvider RegisterPiperlines()
     {
         var pipelinesItems = Assembly
@@ -282,20 +289,6 @@ public class ScrapyApplication : IAsyncDisposable
         foreach (var pipelineItem in pipelinesItems)
         {
             Services.AddSingleton(pipelineItem.ItemType);
-        }
-        return ServiceProvider;
-    }
-
-    private IServiceProvider RegisterSpiders()
-    {
-        var spiders = Assembly
-            .GetEntryAssembly()
-            .GetTypes()
-            .Where(t => typeof(Spider<IResponse>).IsAssignableFrom(t) && !t.IsAbstract);
-
-        foreach (var spider in spiders)
-        {
-            Services.AddSingleton(typeof(Spider<IResponse>), spider);
         }
         return ServiceProvider;
     }

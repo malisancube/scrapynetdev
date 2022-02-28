@@ -5,9 +5,9 @@ Scrapy.NET is a framework that gives you a similar API as Scrapy and gives you a
 ### Requirements
 
 - .NET 6
-- Works on Linux, Windows, MacOS, BSD 
+- Works on Linux, Windows, MacOS, BSD
 
-### Getting Started 
+### Getting Started
 
 Install the nuget package on your project as follows
 
@@ -32,8 +32,7 @@ await app.RunAsync();
 ```
 
 
-
-The spider code would be 
+The spider code would be
 
 ``` csharp
 using scrapy.net;
@@ -60,9 +59,9 @@ public class QuoteSpider : Spider<IResponse>
         var htmlResponse = (HtmlRequest)response;
         foreach (var quote in htmlResponse.Html.QuerySelectorAll("div.quote"))
         {
-            var item = new 
+            var item = new
             {
-                Text = quote.QuerySelector("span.text")?.TextContent, 
+                Text = quote.QuerySelector("span.text")?.TextContent,
                 Author = quote.QuerySelector("small.author")?.TextContent
             };
             response.Yield(item);
@@ -74,7 +73,7 @@ public class QuoteSpider : Spider<IResponse>
         if (NextPage != null)
         {
             var uri = new Uri(response.Url);
-            response.Url = uri.GetLeftPart(UriPartial.Authority) + NextPage; 
+            response.Url = uri.GetLeftPart(UriPartial.Authority) + NextPage;
             return await response.ExecuteAsync();
         }
         return await response.EndAsync();
@@ -84,14 +83,13 @@ public class QuoteSpider : Spider<IResponse>
 ```
 
 
-
 ### Contributing
 
-We welcome community pull requests for bug fixes, enhancements, and documentation. See [How to contribute](https://github.com/dotnet/efcore/blob/main/.github/CONTRIBUTING.md) for more information.
+We welcome community pull requests for bug fixes, enhancements, and documentation. See [How to contribute](https://github.com/malisancube/scrapynetdev/CONTRIBUTING.md) for more information.
 
 ### Getting support
 
-If you have a specific question about using these projects, we encourage you to [ask it on Stack Overflow](https://stackoverflow.com/questions/tagged/scrapy-net*?tab=Votes). If you encounter a bug or would like to request a feature, [submit an issue]().
+If you have a specific question about using these projects, we encourage you to [ask it on Stack Overflow](https://stackoverflow.com/questions/tagged/scrapy-net*?tab=Votes). If you encounter a bug or would like to request a feature, [submit an issue](https://github.com/malisancube/scrapynetdev/issues).
 
 ## See also
 
